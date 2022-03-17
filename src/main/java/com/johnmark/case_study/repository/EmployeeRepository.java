@@ -10,7 +10,7 @@ import java.util.Optional;
  * John Mark A. Fabros
  */
 @Repository
-public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     Optional<Employee> findEmployeeByFirstName(String firstName);
     Optional<Employee> findEmployeeByEmail(String email);
 }

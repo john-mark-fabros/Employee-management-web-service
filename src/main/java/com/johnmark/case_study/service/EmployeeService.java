@@ -21,6 +21,7 @@ import java.util.Optional;
 @Service
 public class EmployeeService {
 
+    //private static int countID = 1;
     private final EmployeeRepository employeeRepository;
 
     @Autowired
@@ -37,20 +38,22 @@ public class EmployeeService {
         if (emp.isPresent()) {
             throw new IllegalStateException("Employee already exist: " + emp);
         }
+        //employee.setId(++countID);
         employeeRepository.save(employee);
-        System.out.println(employee);
+        System.out.println("This is the employee data--> "+ employee);
     }
 
-    public void deleteEmployee(Long id) {
+    public void deleteEmployee(Integer id) {
         boolean checkEmployee = employeeRepository.existsById(id);
         if (checkEmployee) {
+            //--countID;
             employeeRepository.deleteById(id);
         }
         throw new IllegalStateException("Employee does not exist");
     }
 
     @Transactional
-    public void updateEmployee(Long id, String email) {
+    public void updateEmployee(Integer id, String email) {
 
         Employee employee = employeeRepository.findById(id).orElseThrow(() ->
                 new IllegalStateException("Employee does not exist"));
@@ -79,12 +82,12 @@ public class EmployeeService {
         if(pagedResult.hasContent()) {
             return pagedResult.getContent();
         } else {
-            return new ArrayList<Employee>();
+            return new ArrayList<>();
         }
     }
 
-    public List<Employee> sortEmployees(String firstName) {
-        Sort sortOrder = Sort.by(firstName);
+    public List<Employee> sortEmployees(String sort) {
+        Sort sortOrder = Sort.by(sort);
         return employeeRepository.findAll(sortOrder);
     }
 }

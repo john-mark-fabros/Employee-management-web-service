@@ -33,12 +33,12 @@ public class EmployeeController {
     }
 
     @DeleteMapping(path = "{id}")
-    public void deleteEmployee(@PathVariable("id") Long id) {
+    public void deleteEmployee(@PathVariable("id") Integer id) {
         employeeService.deleteEmployee(id);
     }
 
     @PutMapping(path = "{id}")
-    public void updateEmployee(@PathVariable("id") Long id,
+    public void updateEmployee(@PathVariable("id") Integer id,
                                @RequestParam(required = false) String email) {
         employeeService.updateEmployee(id, email);
     }
@@ -53,8 +53,8 @@ public class EmployeeController {
         return employeeService.pageEmployee(pageNo, pageSize);
     }
 
-    @GetMapping(path = "/sort/{firstName}")
-    public List<Employee> sortEmployeeByFirstName(@PathVariable String firstName) {
-        return employeeService.sortEmployees(firstName);
+    @GetMapping(path = "/sort/{sort}")
+    public List<Employee> sortEmployeeByFirstName(@PathVariable String sort) {
+        return employeeService.sortEmployees(sort);
     }
 }

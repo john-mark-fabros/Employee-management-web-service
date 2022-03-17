@@ -20,7 +20,8 @@ public class Employee {
             strategy = GenerationType.SEQUENCE,
             generator = "employee_sequence"
     )
-    private Long id;
+    //@GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Integer id;
 
     private String firstName;
     private String lastName;
@@ -28,7 +29,7 @@ public class Employee {
 
     public Employee(){}
 
-    public Employee(long id, String firstName, String lastName, String email) {
+    public Employee(Integer id, String firstName, String lastName, String email) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -41,11 +42,11 @@ public class Employee {
         this.email = email;
     }
 
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
