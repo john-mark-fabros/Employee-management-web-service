@@ -7,7 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -21,7 +23,6 @@ import java.util.Optional;
 @Service
 public class EmployeeService {
 
-    //private static int countID = 1;
     private final EmployeeRepository employeeRepository;
 
     @Autowired
@@ -36,9 +37,8 @@ public class EmployeeService {
     public void addNewEmployee(Employee employee) {
         Optional<Employee> emp = employeeRepository.findEmployeeByFirstName(employee.getFirstName());
         if (emp.isPresent()) {
-            throw new IllegalStateException("Employee already exist: " + emp);
+            throw new ResponseStatusException(HttpStatus.FOUND, "Employee already exist");
         }
-        //employee.setId(++countID);
         employeeRepository.save(employee);
         System.out.println("This is the employee data--> "+ employee);
     }
@@ -46,21 +46,21 @@ public class EmployeeService {
     public void deleteEmployee(Integer id) {
         boolean checkEmployee = employeeRepository.existsById(id);
         if (checkEmployee) {
-            //--countID;
             employeeRepository.deleteById(id);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        throw new IllegalStateException("Employee does not exist");
     }
 
     @Transactional
     public void updateEmployee(Integer id, String email) {
 
         Employee employee = employeeRepository.findById(id).orElseThrow(() ->
-                new IllegalStateException("Employee does not exist"));
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee don't exist"));
         if ((email != null) && (email.length() > 0) && (!Objects.equals(employee.getEmail(), email))) {
             Optional<Employee> emp = employeeRepository.findEmployeeByEmail(email);
             if (emp.isPresent()) {
-                throw new IllegalStateException("Email is Already taken");
+                throw new ResponseStatusException(HttpStatus.FOUND, "Email already exist");
             }
             employee.setEmail(email);
         }
@@ -71,7 +71,7 @@ public class EmployeeService {
         if (emp.isPresent()) {
             return emp.stream().toList();
         }
-        throw new IllegalStateException("Employee does not exist: " + emp);
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, firstName +" does not exist");
     }
 
     public List<Employee> pageEmployee(int pageNo, int pageSize) {

@@ -33,7 +33,7 @@ public class EmployeeController {
     }
 
     @DeleteMapping(path = "{id}")
-    public void deleteEmployee(@PathVariable("id") Integer id) {
+    public void deleteEmployee(@PathVariable("id") @RequestParam Integer id) {
         employeeService.deleteEmployee(id);
     }
 
@@ -43,18 +43,18 @@ public class EmployeeController {
         employeeService.updateEmployee(id, email);
     }
 
-    @GetMapping(path = "/employee/{firstName}")
-    public List<Employee> getSpecificEmployee(@PathVariable("firstName") String firstName) {
+    @GetMapping(path = "/employ/{firstName}")
+    public List<Employee> getSpecificEmployee(@PathVariable("firstName") @RequestParam String firstName) {
         return employeeService.getEmployeeByFirstName(firstName);
     }
 
     @GetMapping(path = "{pageNo}/{pageSize}")
-    public List<Employee> pageEmployee(@PathVariable Integer pageNo, @PathVariable Integer pageSize) {
+    public List<Employee> pageEmployee(@PathVariable @RequestParam Integer pageNo, @PathVariable @RequestParam Integer pageSize) {
         return employeeService.pageEmployee(pageNo, pageSize);
     }
 
     @GetMapping(path = "/sort/{sort}")
-    public List<Employee> sortEmployeeByFirstName(@PathVariable String sort) {
+    public List<Employee> sortEmployeeByFirstName(@PathVariable @RequestParam String sort) {
         return employeeService.sortEmployees(sort);
     }
 }
