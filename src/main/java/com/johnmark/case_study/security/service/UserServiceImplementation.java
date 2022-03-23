@@ -44,6 +44,11 @@ public class UserServiceImplementation implements UserService, UserDetailsServic
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
     }
 
+    @Override
+    public void deleteUser(Integer id) {
+        userRepo.deleteById(id);
+    }
+
 
     @Override
     public User addUser(User user) {

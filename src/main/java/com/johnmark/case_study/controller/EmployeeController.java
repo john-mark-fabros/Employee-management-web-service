@@ -12,7 +12,7 @@ import java.util.List;
  * John Mark A. Fabros
  */
 @RestController
-@RequestMapping(path = "/api/v1/employees")
+@RequestMapping(path = "/userAPI/v1/employees")
 public class EmployeeController {
 
     private final EmployeeService employeeService;
@@ -48,7 +48,7 @@ public class EmployeeController {
         return employeeService.getEmployeeByFirstName(firstName);
     }
 
-    @GetMapping(path = "{pageNo}/{pageSize}")
+    @GetMapping(path = "/{pageNo}/{pageSize}")
     public List<Employee> pageEmployee(@PathVariable Integer pageNo, @PathVariable Integer pageSize) {
         return employeeService.pageEmployee(pageNo, pageSize);
     }
