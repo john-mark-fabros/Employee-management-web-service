@@ -40,7 +40,6 @@ public class EmployeeService {
             throw new ResponseStatusException(HttpStatus.FOUND, "Employee already exist");
         }
         employeeRepository.save(employee);
-        System.out.println("This is the employee data--> "+ employee);
     }
 
     public void deleteEmployee(Integer id) {

@@ -12,7 +12,7 @@ import java.util.List;
  * John Mark A. Fabros
  */
 @RestController
-@RequestMapping(path = "api/v1/employees")
+@RequestMapping(path = "/api/v1/employees")
 public class EmployeeController {
 
     private final EmployeeService employeeService;
@@ -27,34 +27,34 @@ public class EmployeeController {
         return employeeService.listEmployees();
     }
 
-    @PostMapping
+    @PostMapping(path = "/add/employee")
     public void saveEmployee(@Valid @RequestBody Employee employee) {
         employeeService.addNewEmployee(employee);
     }
 
-    @DeleteMapping(path = "{id}")
-    public void deleteEmployee(@PathVariable("id") @RequestParam Integer id) {
+    @DeleteMapping(path = "/delete/{id}")
+    public void deleteEmployee(@PathVariable("id") Integer id) {
         employeeService.deleteEmployee(id);
     }
 
-    @PutMapping(path = "{id}")
+    @PutMapping(path = "/update/{id}")
     public void updateEmployee(@PathVariable("id") Integer id,
                                @RequestParam(required = false) String email) {
         employeeService.updateEmployee(id, email);
     }
 
-    @GetMapping(path = "/employ/{firstName}")
-    public List<Employee> getSpecificEmployee(@PathVariable("firstName") @RequestParam String firstName) {
+    @GetMapping(path = "/get/employee/{firstName}")
+    public List<Employee> getSpecificEmployee(@PathVariable("firstName") String firstName) {
         return employeeService.getEmployeeByFirstName(firstName);
     }
 
     @GetMapping(path = "{pageNo}/{pageSize}")
-    public List<Employee> pageEmployee(@PathVariable @RequestParam Integer pageNo, @PathVariable @RequestParam Integer pageSize) {
+    public List<Employee> pageEmployee(@PathVariable Integer pageNo, @PathVariable Integer pageSize) {
         return employeeService.pageEmployee(pageNo, pageSize);
     }
 
     @GetMapping(path = "/sort/{sort}")
-    public List<Employee> sortEmployeeByFirstName(@PathVariable @RequestParam String sort) {
+    public List<Employee> sortEmployeeByFirstName(@PathVariable String sort) {
         return employeeService.sortEmployees(sort);
     }
 }

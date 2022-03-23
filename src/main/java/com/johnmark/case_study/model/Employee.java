@@ -20,7 +20,6 @@ public class Employee {
             strategy = GenerationType.SEQUENCE,
             generator = "employee_sequence"
     )
-    //@GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
 
     private String firstName;
